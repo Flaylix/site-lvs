@@ -197,6 +197,16 @@ footer ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;
 @media (min-width:48rem){footer{padding-bottom:3rem}footer .cols{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:2rem}}
 footer .cols{display:grid;gap:2rem}
 
+.legal-link{font:inherit;color:var(--on-navy);background:none;border:0;padding:0;text-decoration:underline;cursor:pointer}
+dialog#legal{width:min(46rem,calc(100% - 2rem));max-height:85vh;padding:0;border:3px solid var(--joint);background:var(--surface);color:var(--ink)}
+dialog#legal::backdrop{background:rgba(7,17,26,.75)}
+.legal-head{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1rem 1.25rem;background:var(--navy);color:var(--on-navy)}
+.legal-head h2{font-size:1.7rem}
+.legal-close{font:inherit;font-weight:700;color:var(--on-navy);background:none;border:2px solid currentColor;padding:.4rem .9rem;cursor:pointer}
+.legal-body{padding:.5rem 1.25rem 1.5rem;font-size:.98rem}
+.legal-body h3{font-size:1.2rem;margin:1.4rem 0 .4rem}
+.legal-body p{margin:0 0 .7rem;color:var(--muted)}
+
 /* Barre d'appel sur téléphone */
 .bar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:1fr 1fr;gap:2px;background:#1E3040;padding-bottom:env(safe-area-inset-bottom,0px)}
 .bar a{min-height:3.4rem;display:flex;align-items:center;justify-content:center;gap:.5rem;font-weight:700;text-decoration:none;color:#fff;background:var(--btn)}
@@ -469,9 +479,44 @@ footer .cols{display:grid;gap:2rem}
         <li><a href="https://www.facebook.com/61572236645729/" target="_blank" rel="noopener">Facebook</a></li>
       </ul>
     </div>
-    <p class="legal">Mentions légales : PesentiRenov38, [forme juridique], [adresse du siège], SIRET [numéro à compléter]. Assurance décennale : [assureur et numéro de contrat]. Hébergeur : [à compléter].</p>
+    <p class="legal">© PesentiRenov38, carreleur à Vinay (38). <button type="button" class="legal-link" id="open-legal">Mentions légales et confidentialité</button></p>
   </div>
 </footer>
+
+<dialog id="legal" aria-labelledby="legal-title">
+  <div class="legal-head">
+    <h2 id="legal-title">Mentions légales</h2>
+    <button type="button" class="legal-close" id="close-legal" aria-label="Fermer">Fermer</button>
+  </div>
+  <div class="legal-body">
+    <h3>Éditeur du site</h3>
+    <p>PesentiRenov38<br>
+    Jérémy Pesenti, entrepreneur individuel (micro-entreprise), artisan carreleur<br>
+    Adresse : [ADRESSE COMPLÈTE], 38470 Vinay<br>
+    SIRET : [NUMÉRO SIRET]<br>
+    TVA non applicable, article 293 B du Code général des impôts<br>
+    Téléphone : 07 67 02 65 15<br>
+    E-mail : pesentirenov38@gmail.com</p>
+    <p>Directeur de la publication : Jérémy Pesenti.</p>
+
+    <h3>Hébergement</h3>
+    <p>Railway Corporation, 548 Market Street, PMB 68956, San Francisco, CA 94104, États-Unis. Site : railway.com</p>
+
+    <h3>Propriété intellectuelle</h3>
+    <p>Les textes, le logo et les photographies de ce site appartiennent à PesentiRenov38 ou sont utilisés avec l'accord de leurs auteurs. Toute reproduction sans autorisation écrite est interdite.</p>
+
+    <h3>Données personnelles</h3>
+    <p>Le formulaire de devis recueille votre nom, votre numéro de téléphone, la commune du chantier et la description de votre projet. Ces informations servent uniquement à vous recontacter et à établir votre devis. Elles reposent sur votre demande (mesures précontractuelles).</p>
+    <p>Elles sont transmises à PesentiRenov38 par SMS et par e-mail au moyen du service Brevo (Sendinblue SAS, Paris). Elles ne sont ni vendues ni cédées à des tiers. Elles sont conservées le temps de traiter votre demande, et au plus trois ans après le dernier contact.</p>
+    <p>Vous pouvez demander l'accès, la rectification ou la suppression de vos données, ou vous opposer à leur utilisation, en écrivant à pesentirenov38@gmail.com. Vous pouvez aussi saisir la CNIL (cnil.fr).</p>
+
+    <h3>Cookies</h3>
+    <p>Ce site ne dépose aucun cookie publicitaire ni de mesure d'audience. Les polices d'écriture sont chargées depuis Google Fonts, ce qui transmet votre adresse IP à Google.</p>
+
+    <h3>Médiation de la consommation</h3>
+    <p>En cas de litige, le client particulier peut recourir gratuitement au médiateur de la consommation : [NOM ET COORDONNÉES DU MÉDIATEUR].</p>
+  </div>
+</dialog>
 
 <div class="bar">
   <a href="tel:+33767026515">
@@ -527,6 +572,15 @@ footer .cols{display:grid;gap:2rem}
       .catch(function(){ mailto(v); })
       .then(function(){ btn.disabled=false; btn.textContent=label; });
   });
+})();
+
+// Mentions légales
+(function(){
+  var d=document.getElementById('legal'), o=document.getElementById('open-legal'), c=document.getElementById('close-legal');
+  if(!d||!o) return;
+  o.addEventListener('click',function(){ d.showModal ? d.showModal() : d.setAttribute('open',''); });
+  c.addEventListener('click',function(){ d.close ? d.close() : d.removeAttribute('open'); });
+  d.addEventListener('click',function(e){ if(e.target===d) d.close(); });
 })();
 </script>
 </body>
